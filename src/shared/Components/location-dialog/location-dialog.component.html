@@ -1,0 +1,13 @@
+<div class="conatiner-fluid">
+  <google-map height="350px"
+              width="auto"
+              [center]="center"
+              [zoom]="zoom">
+    <map-marker *ngIf="markerPosition"
+                [position]="markerPosition"
+                [options]="markerOptions"></map-marker>
+  </google-map>
+    <div class="col-12 text-center mt-3">
+        <button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+    </div>
+</div>

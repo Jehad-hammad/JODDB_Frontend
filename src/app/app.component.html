@@ -1,0 +1,62 @@
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" position="start"
+    color="primary" style="background:#0B192C" *ngIf="authorizeService.isAuthenticated()">
+    <div class="sidebar-logo">
+      <img src="../assets/Images/logo.png" class="logo-img" alt="MAWAD">
+    </div>
+    <perfect-scrollbar style="max-width: 100%; max-height: 90%;">
+      <mat-nav-list *ngFor="let item of getNavItems()">
+        <mat-list-item class="parent" (click)="navigate(item.route)">
+          <span class="full-width">{{item.displayName}}</span>
+          <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
+        </mat-list-item>
+      </mat-nav-list>
+    </perfect-scrollbar>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content style="min-height:100vh; background-color:#f5f5f9 ;">
+    <mat-toolbar color="primary" *ngIf="authorizeService.isAuthenticated()">
+      
+      <button mat-icon-button *ngIf="!IsSidebarOpened" (click)="toggle()" style=" margin-left: 6px;">
+        <mat-icon class="menIcon" style="color: #0B192C;">menu</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="IsSidebarOpened" (click)="toggle()" style=" margin-left: 6px;">
+        <mat-icon class="menIcon" style="color: #0B192C;">close</mat-icon>
+      </button>
+      <span class="example-spacer"></span>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon style="color: #0B192C;">more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+   
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>login</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+
+
+
+    </mat-toolbar>
+    <div class="sidenav-content">
+      <div class="container-fluid main-block" style="padding-top: 5%;">
+
+        <router-outlet #o="outlet"></router-outlet>
+        <br />
+      </div>
+    </div>
+    <ngx-spinner size="medium" color="#fff" type="ball-spin-clockwise" [fullScreen]="true"></ngx-spinner>
+    <simple-notifications></simple-notifications>
+    <footer *ngIf="authorizeService.isAuthenticated()">
+      <div class="footer-copyright text-center py-3">
+        <h2>© 2020 Cancrie Solutions 1.1.5</h2>
+      </div>
+
+    </footer>
+  </mat-sidenav-content>
+
+
+</mat-sidenav-container>

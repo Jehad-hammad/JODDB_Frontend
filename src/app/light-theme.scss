@@ -1,0 +1,88 @@
+@import '~@angular/material/theming';
+$my-blue: (
+  50: #6e6ae1,
+  100: #7faedd,
+  200: #7f7fdd,
+  300: #7faedd,
+  400: #7faedd,
+  500: #7faedd,
+  600: #7faedd,
+  700: #7faedd,
+  800: #7faedd,
+  900: #7faedd,
+  A100: #7faedd,
+  A200: #7faedd,
+  A400: #7faedd,
+  A700: #7faedd,
+  contrast: (50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+$light-custom-theme-primary: mat-palette($my-blue, 50);
+$light-custom-theme-accent: mat-palette($mat-red, 700);
+$light-custom-theme-warn: mat-palette($mat-red, 700);
+$light-custom-theme: mat-light-theme($light-custom-theme-primary, $light-custom-theme-accent, $light-custom-theme-warn);
+
+
+.ngx-pagination .current {
+  background-color: #00ACC1 !important;
+}
+
+.sidenav-toolbar {
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 600px) {
+    height: 56px;
+  }
+}
+
+
+/*.mat-card {
+  background-image: url('/assets/Images/01_STS_DGT_7713_RGB-0.png') !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+*/
+/*.image-card {
+  background-image: url('/assets/Images/01_STS_DGT_7713_RGB-0.png') !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}*/
+
+.image-background-light {
+  background-color: linear-gradient(90deg, rgba(146, 83, 232, 1) 7%, rgba(245, 39, 195, 1) 100%) !important;
+}
+
+.light-custom-theme .mat-flat-button.mat-accent,
+.light-custom-theme .mat-raised-button.mat-accent,
+.light-custom-theme .mat-fab.mat-accent,
+.light-custom-theme .mat-mini-fab.mat-accent {
+  background-color: #6e6ae1 !important;
+}
+
+.light-custom-theme .mat-flat-button.mat-warn,
+.light-custom-theme .mat-raised-button.mat-warn,
+.light-custom-theme .mat-fab.mat-warn,
+.light-custom-theme .mat-mini-fab.mat-warn {
+  background-color: #6e6ae1 !important;
+}
+
+.light-custom-theme .mat-chip.mat-standard-chip.mat-chip-selected.mat-accent {
+  background-color: #6e6ae1 !important;
+}

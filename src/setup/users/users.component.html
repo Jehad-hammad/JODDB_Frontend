@@ -1,0 +1,103 @@
+<mat-card>
+  <mat-card-header class="d-flex justify-content-between align-items-center title-border">
+    <mat-card-title class="mb-0">
+      Users
+    </mat-card-title>
+    <div>
+      <button mat-raised-button color="accent" [routerLink]="['/add-user']" class="m-1">Add New User</button>
+      <button mat-raised-button color="accent" [routerLink]="['/setup/change-password']" class="ml-2"
+        style="margin: 1px;">Change Password For User</button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <form [formGroup]="filterForm">
+          
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input type="text" matInput formControlName="fullName">
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline">
+                <mat-label>Mobile Number</mat-label>
+                <input type="text" matInput formControlName="mobileNumber">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-right" style="margin-top: 20px;">
+              <button mat-raised-button color="accent" (click)="applyFilter()" style="margin: 1px;">Search</button>
+
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<br>
+<mat-card>
+  <mat-card-content>
+    <div class="table-responsive" *ngIf="dataSource" >
+      <mat-table
+        [dataSource]="dataSource.data.length > 0 && dataSource.filteredData.length > 0 ? dataSource : emptyData">
+
+
+        <ng-container matColumnDef="fullName">
+          <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="Full Name">
+            {{element?.name}}
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="mobileNumber">
+          <mat-header-cell *matHeaderCellDef>Phone Number</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="Phone Number">
+            {{element?.mobileNumber}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="Address">
+            {{element?.email}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="Status">
+            <mat-chip-list aria-label="Fish selection">
+              <mat-chip color="accent" selected *ngIf="element?.isActive">Active</mat-chip>
+              <mat-chip color="accent" *ngIf="!element?.isActive">InActive</mat-chip>
+            </mat-chip-list>
+          </mat-cell>
+        </ng-container>
+
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="Actions" class="text-right">
+            <button mat-raised-button color="accent" [routerLink]="['/setup/edit-users/' + element?.id]" class="ml-2"
+              style="margin: 1px;">Edit User</button>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="empty-row">
+          <mat-cell class="no-data-cell" [attr.colspan]="3" *matCellDef="let element">No Data Found</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: dataSource.data.length > 0 && dataSource.filteredData.length > 0 ? displayedColumns : ['empty-row'];"></mat-row>
+      </mat-table>
+    </div>
+    <mat-paginator (page)="changePage($event)" [length]="totalListCount" [pageSize]="pageSize"  [pageIndex]="pageIndex" 
+      [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </mat-card-content>
+</mat-card>

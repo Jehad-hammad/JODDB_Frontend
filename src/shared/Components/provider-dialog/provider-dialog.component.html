@@ -1,0 +1,25 @@
+<div class="conatiner-fluid">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h4>Select Provider To export Items</h4>
+        </div>
+    </div>
+    <hr>
+    <br>
+    <div class="col-12 text-center">
+        <form [formGroup]="providerForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Provider</mat-label>
+                <mat-select formControlName="providerId">
+                    <mat-option *ngFor="let provider of providersList" [value]="provider.id">
+                        {{provider.name}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+    <br>
+    <div class="col-12">
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-button (click)="onSubmit()">Export Items</button>
+    </div>
+</div>

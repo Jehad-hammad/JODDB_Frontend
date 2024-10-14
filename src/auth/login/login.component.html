@@ -1,0 +1,35 @@
+<div class=" ">
+  <div class="d-flex form-page align-items-center justify-content-center ">
+    <form [formGroup]="loginForm" class="auth-form">
+      <mat-card class="text-center py-5 px-4">
+        <div class="row">
+          <div class="col">
+            <img src="./../../assets/Images/logo.png" style="max-height: 60px; max-width: 100%;" alt="MAWAD">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="userName" type="text" id="username">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" id="password">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button mat-raised-button color="accent" (click)="submitForm()" class="btn-lg py-2 w-100 mt-3">Login</button>
+          </div>
+        </div>
+      </mat-card>
+    </form>
+  </div>
+</div>
