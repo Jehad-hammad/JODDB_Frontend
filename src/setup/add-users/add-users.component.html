@@ -10,160 +10,48 @@
       <div class="col">
         <form [formGroup]="userForm">
           <div class="row">
-
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Phone Number</mat-label>
-                <input type="text" matInput formControlName="mobileNumber" />
-              </mat-form-field>
-            </div>
-
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
-                <input type="text" matInput formControlName="email">
-              </mat-form-field>
-            </div>
-
-
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Full Name</mat-label>
-                <input type="text" matInput formControlName="fullName" />
-              </mat-form-field>
-            </div>
-
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Password</mat-label>
-                <input type="password" matInput formControlName="password" />
-              </mat-form-field>
-            </div>
-
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Account Type</mat-label>
-                <mat-select formControlName="accountType" (selectionChange)="onAccountTypeChange()">
-                  <mat-option *ngFor="let accountType of AccountType" [value]="accountType.id">
-                    {{accountType.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="col-4" *ngIf="isContractor">
-              <mat-form-field appearance="outline">
-                <mat-label>Cr Number</mat-label>
-                <input type="text" matInput formControlName="crNumber" />
-              </mat-form-field>
-            </div>
-
-            <div class="col-4" style="margin-top: 20px;" *ngIf="isContractor">
-              <input #fileInput type="file" [hidden]="true" (change)="handleFileInput($event.target.files[0])"
-                accept=".jpg,.jpeg, .tiff, .png , .pdf" />
-              <button *ngIf="!selectedFile" mat-raised-button color="accent"
-                style="margin-right:10px;margin-bottom:10px;" (click)="fileInput.click()"
-                matTooltip="Upload Certificate" matTooltipPosition="above">Upload Certificate</button>
-              <button *ngIf="selectedFile" mat-raised-button color="accent"
-                (click)="clearFileInput()">{{selectedFile?.name}}
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-
-        </form>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
-
-<br />
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      User Addresses
-    </mat-card-title>
-  </mat-card-header>
-  <hr>
-
-  <mat-card-content>
-    <div class="row">
-      <div class="col">
-        <form [formGroup]="addressesForm">
-          <div class="row">
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label> Name</mat-label>
-                <input type="text" matInput formControlName="name" />
-              </mat-form-field>
-            </div>
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Mobile Number</mat-label>
-                <input type="text" matInput formControlName="mobileNumber" />
-              </mat-form-field>
-            </div>
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>City</mat-label>
-                <input type="text" matInput formControlName="city" />
-              </mat-form-field>
-            </div>
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>Street</mat-label>
-                <input type="text" matInput formControlName="street" />
-              </mat-form-field>
-            </div>
-            <div class="col-4">
-              <mat-form-field appearance="outline">
-                <mat-label>postalCode</mat-label>
-                <input type="text" matInput formControlName="postalCode" />
-              </mat-form-field>
-            </div>
-            <div class="col-4 justify-content-center align-self-center">
-              <mat-checkbox formControlName="isDefault">IsDefault</mat-checkbox>
-            </div>
-            <div class="col-12 text-right">
-              <button class="remove-btn" mat-raised-button color="accent" (click)="onAddAddresses()" mat-button
-                color="warn">
-                <mat-icon>add</mat-icon>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <br />
-    <br />
-    <div class="row" *ngIf="Addresses.length > 0">
-      <div class="col-12">
-        <table class="table">
-          <thead>
-            <th>Name</th>
-            <th>MobileNumber</th>
-            <th>City</th>
-            <th>Street</th>
-            <th>PostalCode</th>
-            <th>Is Default</th>
-            <th>Action</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let address of Addresses">
-              <td>{{address.name}}</td>
-              <td>{{address.mobileNumber}}</td>
-              <td>{{address.city}}</td>
-              <td>{{address.street}}</td>
-              <td>{{address.postalCode}}</td>
-              <td>{{address.isDefault}}</td>
-              <td>
-                <button class="remove-btn" mat-raised-button color="accent" (click)="onDeleteAddresses(address)"
-                  mat-button color="warn">
-                  <mat-icon>delete</mat-icon>
+            <div class="col-lg-6 col-sm-12 h-100 row">
+                <input #fileInput type="file" [hidden]="true" (change)="handleFileInput($event.target.files[0])"
+                accept=".jpg,.jpeg, .tiff, .png "/>
+                <button  (click)="fileInput.click()" mat-raised-button color="accent"  class="ml-2" *ngIf="!selectedFile"
+                  style="margin: 1px;">Import User Image
                 </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                <img *ngIf="imageUrl" [src]="imageUrl" class="img-thumbnail" alt="Uploaded Image" style="max-width: 50%;max-height: 50%;"/>
+              </div>
+            <div class="col-lg-6 col-sm-12 h-100 row">
+              <div class="col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Full Name</mat-label>
+                  <input type="text" matInput formControlName="name" />
+                </mat-form-field>
+              </div>
+  
+              <div class="col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Phone Number</mat-label>
+                  <input type="text" matInput formControlName="mobileNumber" />
+                </mat-form-field>
+              </div>
+  
+              <div class="col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input type="text" matInput formControlName="email">
+                </mat-form-field>
+              </div>
+  
+              <div class="col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Password</mat-label>
+                  <input type="password" matInput formControlName="password" />
+                </mat-form-field>
+              </div>
+            </div>
+          
+          
+          </div>
+
+        </form>
       </div>
     </div>
   </mat-card-content>

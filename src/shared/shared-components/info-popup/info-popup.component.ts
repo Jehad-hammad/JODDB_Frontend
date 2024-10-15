@@ -17,13 +17,13 @@ export class InfoPopupComponent implements OnInit {
     public baseService: BaseService) { }
 
   ngOnInit(): void {
-    this.getActiveOrderCount()
+    //this.getActiveOrderCount()
   }
 
-  getActiveOrderCount() {
-    this.baseService.getActiveOrderCount().subscribe(res => {
-      this.dashboardData = res as any
-      this.dashboardData.name = this.dashboardData.name.replace("{{count}}", this.dashboardData.value)
-    })
-  }
+  // getActiveOrderCount() {
+  //   this.baseService.getActiveOrderCount().subscribe(res => {
+  //     this.dashboardData = res as any
+  //     this.dashboardData.name = this.dashboardData.name.replace("{{count}}", this.dashboardData.value)
+  //   })
+  // }
 }

@@ -92,40 +92,6 @@ export class BaseService {
     return this.http.get(apiPreLink + Action)
   }
 
-  public removeItemById(controllerName: string, id: number): Observable<any> {
-    return this.http.get(apiPreLink + controllerName + Actions.RemoveItemById + '/' + id);
-  }
-
-  public removeItem(controllerName: string, id: number): Observable<any> {
-    return this.http.get(apiPreLink + controllerName + Actions.RemoveItem + '/' + id);
-  }
-  public removeItemImage(controllerName: string, id: number): Observable<any> {
-    return this.http.get(apiPreLink + controllerName + Actions.RemoveItemImage + '/' + id);
-  }
-
-  public deleteVideo(controllerName, ItemId) {
-    return this.http.get(apiPreLink + controllerName + 'DeleteVideo/' + ItemId);
-  }
-
-  public removeRange(controllerName: string, postobject: any): Observable<any> {
-    return this.http.post(apiPreLink + controllerName + Actions.RemoveRange, JSON.stringify(postobject), httpOptions);
-  }
-
-  public toggleAllItems(from, to): Observable<any> {
-    return this.http.get(apiPreLink + 'Item/ToggleAllProducts/' + from + '/' + to);
-  }
-
-  public toggleSaleStatus(id): Observable<any> {
-    return this.http.get(apiPreLink + 'Sale/ToggleStatus/' + id);
-  }
-
-  public activeList(controllerName) {
-    return this.http.get(apiPreLink + controllerName + 'ActiveList')
-  }
-
-  public deleteCouponRule(id: number) {
-    return this.http.get(apiPreLink + 'Coupon/DeleteCouponRules/' + id)
-  }
   public ExportExcel(ControllerName, actionName, id?: number) {
     return this.http.get(apiPreLink + ControllerName + actionName + (id ? '/' + id : ''), {
       headers: new HttpHeaders({
@@ -141,74 +107,15 @@ export class BaseService {
   }
 
 
-  public RegistUser(signup, certificate) {
+  public RegistUser(signup, file) {
     const formData = new FormData();
     formData.append('email', signup.email);
     formData.append('mobileNumber', signup.mobileNumber);
-    formData.append('fullName', signup.fullName);
+    formData.append('name', signup.name);
     formData.append('password', signup.password);
-    formData.append('accountType', signup.accountType);
-    formData.append('crNumber', signup.crNumber);
-    formData.append('addresses', JSON.stringify(signup.addresses));
-    formData.append('certificate', certificate);
-    return this.http.post(apiPreLink + 'Auth/' + 'RegisterSignup', formData)
-  }
-
-  public EditUser(userInfo, certificate) {
-    const formData = new FormData();
-    formData.append('id', userInfo.id);
-    formData.append('email', userInfo.email);
-    formData.append('mobileNumber', userInfo.mobileNumber);
-    formData.append('fullName', userInfo.fullName);
-    formData.append('accountType', userInfo.accountType);
-    formData.append('crNumber', userInfo.crNumber);
-    formData.append('addresses', JSON.stringify(userInfo.addresses));
-    formData.append('certificate', certificate);
-    return this.http.post(apiPreLink + 'Auth/' + 'UpdateUseInfo', formData)
-  }
-
-  public UpdateUserInfo(signup) {
-    return this.http.post(apiPreLink + 'Auth/' + 'UpdateUserProfile', JSON.stringify(signup), httpOptions)
-  }
-
-  public ChangePasswordAdmin(changePassword) {
-    return this.http.post(apiPreLink + 'Auth/' + 'ChangePasswordFromAdmin', JSON.stringify(changePassword), httpOptions)
-  }
-
-  public AddImage(controllerName, actionName, objectId, file) {
-    const formData = new FormData();
-    formData.append('files', file)
-    return this.http.post(apiPreLink + controllerName + actionName + '/' + objectId, formData)
-  }
-  public getActiveOrderCount() {
-    return this.http.get(apiPreLink + 'Order/GetActiveOrderCount')
-  }
-
-  public getSuggestedItems(itemId): Observable<any> {
-    return this.http.get(apiPreLink + Controllers.Item + "GetSuggestedItemsForAdmin/" + itemId);
-  }
-
-  public addSuggestedItems(itemId, suggestedItems) {
-    return this.http.post(apiPreLink + Controllers.Item + "AddSuggestedItems/" + itemId, suggestedItems, httpOptions)
-  }
-
-  public getBanners() {
-    return this.http.get(apiPreLink + 'Lookups/GetBanners');
-  }
-
-  public modifyItemPrices(postObject: any): Observable<any> {
-    return this.http.post(apiPreLink + "Item/ModifyItemPrices", JSON.stringify(postObject), httpOptions);
-  }
-
-  uploadOrderInvoice(orderId, file): Observable<any> {
-    const formData = new FormData();
-    formData.append('id', orderId);
     formData.append('file', file);
-    return this.http.post(apiPreLink + 'Order/AddInvoice', formData);
+    return this.http.post(apiPreLink + 'User/' + 'UserRegistration', formData)
   }
 
-  public syncMadarItems(): Observable<any> {
-    return this.http.post(apiPreLink + Controllers.Integration + 'SyncMadarItems', httpOptions);
-  }
 
 }

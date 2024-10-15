@@ -1,5 +1,5 @@
 import { AccountTypes, accountTypes } from './../../shared/global-variables/lookups';
-import { Component, OnInit ,ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -14,32 +14,16 @@ import { NotificationService } from 'src/shared/services/notification.service';
 })
 export class AddUsersComponent implements OnInit {
 
-  public AccountType: any[] = []
-  public Addresses: any[] = []
-  public isContractor: boolean = false
   public selectedFile;
-
+  public imageUrl
   @ViewChild('fileInput') myInputVariable: ElementRef;
 
   userForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     mobileNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
-    fullName: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    accountType: new FormControl('', Validators.required),
-    crNumber: new FormControl(''),
-    certificate: new FormControl(''),
-  })
-
-  addressesForm = new FormGroup({
     name: new FormControl('', Validators.required),
-    mobileNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
-    city: new FormControl('', Validators.required),
-    street: new FormControl('', Validators.required),
-    postalCode: new FormControl(''),
-    isDefault: new FormControl(true)
+    password: new FormControl('', Validators.required)
   })
-
 
   constructor(private baseService: BaseService,
     public spinner: NgxSpinnerService,
@@ -48,35 +32,20 @@ export class AddUsersComponent implements OnInit {
     public notification: NotificationService) { }
 
   ngOnInit(): void {
-    this.AccountType = accountTypes
   }
 
 
 
   RegistNewUser() {
-    if (this.userForm.invalid || this.Addresses.length < 1) {
+    if (this.userForm.invalid ) {
       this.userForm.markAllAsTouched()
-      this.addressesForm.markAllAsTouched()
     } else {
-
-      if (!this.Addresses.some(x => x.isDefault == true)) {
-        this.notification.showNotification('User Failed', 'One of the addresses must be set as deafult address', 'error');
-        return;
-      }
-
-      if (this.Addresses.filter(x => x.isDefault == true).length > 1) {
-        this.notification.showNotification('User Failed', 'Only one address must be set as deafult address', 'error');
-        return;
-      }
-
       const form = this.userForm.value
-      form.addresses = this.Addresses
       this.spinner.show()
-
       this.baseService.RegistUser(form, this.selectedFile).subscribe(res => {
         this.spinner.hide()
         this.notification.showNotification('User', 'User Has Been Registered Successfully', 'success')
-        this.route.navigate(['/setup/users'])
+        this.route.navigate(['/users'])
       }, error => {
         this.spinner.hide()
         if (error.status === 400) {
@@ -91,33 +60,6 @@ export class AddUsersComponent implements OnInit {
 
   }
 
-  //#region events
-  onAccountTypeChange() {
-    if (this.formControlValue('accountType') == AccountTypes.Contractor) {
-      this.isContractor = true
-      this.formControlValidation('crNumber')
-      this.formControlValidation('certificate')
-    } else {
-      this.isContractor = false
-      this.clearFormControlValidator('crNumber')
-      this.clearFormControlValidator('certificate')
-    }
-  }
-
-  onAddAddresses() {
-    if (this.addressesForm.invalid) {
-      this.addressesForm.markAllAsTouched()
-    } else {
-      this.Addresses.push(this.addressesForm.value)
-      this.addressesForm.reset()
-      this.addressesForm.get('isDefault').setValue(false)
-    }
-
-  }
-  onDeleteAddresses(address) {
-    this.Addresses = this.Addresses.filter(x => x != address)
-  }
-  //#endregion
 
   //#region form functions
   formControlValue(formControlName) {
@@ -134,13 +76,18 @@ export class AddUsersComponent implements OnInit {
 
   handleFileInput(file): void {
     this.selectedFile = file;
-    this.userForm.controls.certificate.setValue(file.name)
+
+    const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imageUrl = reader.result; // Store the image URL
+      };
+
+      reader.readAsDataURL(file); // Read file as data URL
   }
 
   clearFileInput(): void {
     this.myInputVariable.nativeElement.value = '';
     this.selectedFile = null;
-    this.userForm.controls.certificate.setValue('')
   }
 
 
